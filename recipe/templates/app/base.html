@@ -8,7 +8,9 @@
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://unpkg.com/tailwindcss-jit-cdn"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="icon" href="https://cdn.icon-icons.com/icons2/1808/PNG/64/link_115171.png">
+    <link rel="icon" href="https://img.icons8.com/emoji/256/green-salad-emoji.png">
+    {% comment %} https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css {% endcomment %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Recipes</title>
 </head>
 
@@ -17,26 +19,43 @@
     <header class="text-gray-600 body-font border">
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
             <a href="\" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-                <img src="https://cdn.icon-icons.com/icons2/1808/PNG/64/link_115171.png" alt="icon" class="w-5">
+                <img src="https://img.icons8.com/emoji/256/green-salad-emoji.png" class="w-12" alt="" srcset="">
                 <span class="ml-3 text-xl">Recipes</span>
             </a>
+            <div class="pt-2 relative mx-auto text-gray-600">
+                <form action="/recipe/search/" method="get">
+                    {% comment %} {% csrf_token %} {% endcomment %}
+                    <input class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+                    type="search" name="search" placeholder="Search">
+                    <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
+                        <svg class="text-gray-600 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
+                        viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve"
+                        width="512px" height="512px">
+                        <path
+                        d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+                    </svg>
+                </button>
+            </form>
+              </div>
             <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-                <a class="mr-5 {% block home %} mr-5 hover:text-gray-900 {% endblock home %}" href="/">Home</a>
-                <a class="mr-5 {% block contact %} mr-5 hover:text-gray-900 {% endblock contact %}"
-                    href="/contact">Contact Us</a>
-                <a class="mr-5 {% block price %} mr-5 hover:text-gray-900 {% endblock price %}"
-                    href="/price">Pricing</a>
+                {% comment %} <a class="mr-5 {% block home %} mr-5 hover:text-gray-900 {% endblock home %}" href="/">Home</a> {% endcomment %}
+                {% comment %} <a class="mr-5{% block contact %} mr-5 hover:text-gray-900 {% endblock contact %}"
+                    href="https://github.com/yogesh2k21" target="_blank" >Contact Us</a> {% endcomment %}
+                {% comment %} <a class="mr-5 {% block price %} mr-5 hover:text-gray-900 {% endblock price %}"
+                    href="/price"></a> {% endcomment %}
                 {% if user.is_authenticated %}
-                <a class="mr-5 {% block dash %} mr-5 hover:text-gray-900 {% endblock dash %}" href="/dash">Dashboard</a>
+                <a href="/recipe/create" class="mr-5 {% block dash %} mr-5 px-4 py-1 rounded text-white inline-block shadow-lg bg-green-400 hover:bg-green-600 focus:bg-green-700 p-1 hover:text-gray-900 {% endblock dash %}">Create Recipe</a>
+                <a class="mr-5{% block contact %} mr-5 hover:text-gray-900 {% endblock contact %}"
+                    href="https://github.com/yogesh2k21" target="_blank" >Contact Us</a>
+                    <a href="/account/logout"
+                        class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Logout
+                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a> <!-- logout -->
             </nav>
-
-            <a href="/account/logout"
-                class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Logout
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-                    <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-            </a> <!-- logout -->
             {% else %}
             <a href="/account/login"
                 class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Login
@@ -46,6 +65,7 @@
                 </svg>
             </a> <!-- login -->
             {% endif %}
+
         </div>
     </header>
 
@@ -59,12 +79,12 @@
     <footer class="text-gray-600 body-font">
         <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
             <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
-                <img src="https://cdn.icon-icons.com/icons2/1808/PNG/64/link_115171.png" alt="icon" class="w-5">
+                <img src="https://img.icons8.com/emoji/256/green-salad-emoji.png" alt="icon" class="w-5">
                 <span class="ml-3 text-xl">Recipes</span>
             </a>
             <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">©
                 2023 Recipes —
-                <a href="https://twitter.com/knyttneve" class="text-gray-600 ml-1" rel="noopener noreferrer"
+                <a href="https://github.com/yogesh2k21" class="text-gray-600 ml-1" rel="noopener noreferrer"
                     target="_blank">@Yogesh</a>
             </p>
             <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
