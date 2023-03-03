@@ -13,7 +13,7 @@ def login(request):
                 auth.login(request,user)
                 return HttpResponseRedirect(reverse('home'))
             except User.DoesNotExist:
-                print("execption")
+                messages.error(request, "Invalid Credentails!!!")
                 return render(request,'app/login.html',{'error':"User Doesn't Exist"})  #if user is not registered
         else:
             return render(request,'app/login.html')  #if it is not a post request

@@ -10,9 +10,14 @@ def home(request):
     return render(request,'app/home.html',{"recipes":recipes})
 
 def recipe_detail(request,id):
-    recipe=Recipe.objects.get(id=id)
-    isSameUser=recipe.author==request.user
-    return render(request,'app/recipe_detail_view.html',{"recipe":recipe,'isSameUser':isSameUser})
+    try:
+        recipe=Recipe.objects.get(id=id)
+        isSameUser=recipe.author==request.user
+        return render(request,'app/recipe_detail_view.html',{"recipe":recipe,'isSameUser':isSameUser})
+    except Exception as e:
+        print(e)
+        messages.error(request,"Recipe Doesn't exists!!!")
+        return redirect('/')
 
 def create_recipe(request):
     try:
