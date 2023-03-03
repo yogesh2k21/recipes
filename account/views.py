@@ -26,7 +26,8 @@ def signup(request):
             try:
                 user = User.objects.get(email=request.POST['email'])
                 if user:
-                    return render(request, 'login.html', {'error': "User Already Exists"})
+                    messages.success(request, "User Already Exists!!!")
+                    return render(request, 'app/login.html', {'error': "User Already Exists"})
             except User.DoesNotExist:
                 User.objects.create(
                     username=request.POST['username'],
